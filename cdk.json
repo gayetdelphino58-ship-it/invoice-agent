@@ -1,0 +1,8 @@
+{
+  "app": "python infra/app.py",
+  "context": {
+    "region": "us-east-1",
+    "account": "YOUR_AWS_ACCOUNT_ID",
+    "email": "YOUR_EMAIL@example.com"
+  }
+}
