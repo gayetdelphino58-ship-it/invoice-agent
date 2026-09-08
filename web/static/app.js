@@ -2,7 +2,7 @@
    Invoice Agent — JavaScript Application
    ================================================================ */
 
-const API = "http://localhost:8000/api";
+const API = "/api";
 
 // ── Couleurs par catégorie ──────────────────────────────────────
 const CAT_COLORS = {
