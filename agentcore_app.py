@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from strands import Agent
 from strands.models import BedrockModel
-from amazon_bedrock_agentcore.runtime import AgentCoreApp
+from bedrock_agentcore.runtime import AgentCoreApp
 
 from config import AWS_REGION, BEDROCK_MODEL_ID
 from tools import (
