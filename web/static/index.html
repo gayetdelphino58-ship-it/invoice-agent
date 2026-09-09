@@ -33,7 +33,12 @@
       <span class="nav-label">Rappels</span>
       <span class="nav-badge" id="nav-badge-reminders" style="display:none">0</span>
     </button>
+    <button class="nav-item" data-page="stats">
+      <span class="icon">📈</span>
+      <span class="nav-label">Statistiques</span>
+    </button>
   </nav>
+  <button class="dark-toggle" id="dark-toggle-btn" title="Basculer mode sombre">🌙 Mode sombre</button>
 </aside>
 
 <!-- ================================================================
@@ -45,6 +50,8 @@
   <header class="topbar">
     <span class="topbar-title">Dashboard</span>
     <div class="topbar-actions">
+      <button class="btn btn-sm" id="export-csv-btn" style="display:none" onclick="exportCSV()">⬇ CSV</button>
+      <button class="btn btn-sm" id="export-pdf-btn" style="display:none" onclick="exportPDF()">⬇ PDF</button>
       <button class="btn btn-sm" onclick="loadStats(); navigate(state.currentPage)">↺ Actualiser</button>
       <button class="btn btn-sm btn-primary" onclick="navigate('scan')">+ Scanner une facture</button>
     </div>
@@ -250,6 +257,61 @@
       </div>
 
     </div><!-- /page-reminders -->
+
+
+    <!-- ============================================================
+         PAGE — STATISTIQUES AVANCÉES
+         ============================================================ -->
+    <div class="page" id="page-stats">
+
+      <!-- Ligne 1 : donut + top fournisseurs -->
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Répartition par catégorie</span>
+            <div class="month-nav">
+              <button id="stats-btn-prev">‹</button>
+              <span class="month-label" id="stats-month-label">—</span>
+              <button id="stats-btn-next">›</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="stats-donut"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Top fournisseurs</span></div>
+          <div class="card-body">
+            <div id="stats-top-suppliers"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ligne 2 : évolution mensuelle -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-header"><span class="card-title">Évolution des dépenses (6 derniers mois)</span></div>
+        <div class="card-body">
+          <div id="stats-evolution"></div>
+        </div>
+      </div>
+
+      <!-- Ligne 3 : taux de paiement -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Taux de paiement</span></div>
+          <div class="card-body">
+            <div id="stats-payment-rate"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Résumé global</span></div>
+          <div class="card-body">
+            <div id="stats-summary"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-stats -->
 
   </div><!-- /content -->
 </div><!-- /main -->

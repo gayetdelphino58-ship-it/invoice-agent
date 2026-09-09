@@ -25,25 +25,38 @@ app.add_middleware(
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-# ── Données de démo ──────────────────────────────────────────────
+# ── Données de démo (dates relatives à aujourd'hui) ─────────────
+def _rel(days: int) -> str:
+    """Retourne une date ISO relative à aujourd'hui (±jours)."""
+    from datetime import timedelta
+    return (date.today() + timedelta(days=days)).isoformat()
+
+def _month(delta_months: int) -> str:
+    """Retourne le 1er jour du mois +delta_months."""
+    from datetime import timedelta
+    d = date.today()
+    month = (d.month - 1 + delta_months) % 12 + 1
+    year  = d.year + ((d.month - 1 + delta_months) // 12)
+    return date(year, month, 1).isoformat()
+
 DEMO_INVOICES = [
     {"invoice_id": "inv-001", "supplier": "EDF", "amount": "85.50", "currency": "EUR",
-     "issue_date": "2025-06-01", "due_date": "2025-08-15", "invoice_number": "FAC-2025-001",
+     "issue_date": _rel(-30), "due_date": _rel(15), "invoice_number": "FAC-2025-001",
      "category": "Electricité", "status": "pending", "reminder_sent": "false"},
     {"invoice_id": "inv-002", "supplier": "Orange", "amount": "49.99", "currency": "EUR",
-     "issue_date": "2025-07-01", "due_date": "2025-08-20", "invoice_number": "FAC-ORANGE-777",
+     "issue_date": _rel(-15), "due_date": _rel(20), "invoice_number": "FAC-ORANGE-777",
      "category": "Téléphone", "status": "pending", "reminder_sent": "false"},
     {"invoice_id": "inv-003", "supplier": "Loyer Appartement", "amount": "800.00", "currency": "EUR",
-     "issue_date": "2025-07-01", "due_date": "2025-08-01", "invoice_number": "LOYER-08-2025",
+     "issue_date": _rel(-20), "due_date": _rel(-1), "invoice_number": f"LOYER-{date.today().strftime('%m-%Y')}",
      "category": "Loyer", "status": "paid", "reminder_sent": "true"},
     {"invoice_id": "inv-004", "supplier": "Société Générale Eau", "amount": "32.40", "currency": "EUR",
-     "issue_date": "2025-06-15", "due_date": "2025-07-30", "invoice_number": "EAU-2025-456",
+     "issue_date": _rel(-45), "due_date": _rel(-5), "invoice_number": "EAU-2025-456",
      "category": "Eau", "status": "overdue", "reminder_sent": "true"},
     {"invoice_id": "inv-005", "supplier": "Netflix", "amount": "17.99", "currency": "EUR",
-     "issue_date": "2025-07-10", "due_date": "2025-08-10", "invoice_number": "NF-20250710",
+     "issue_date": _rel(-10), "due_date": _rel(10), "invoice_number": f"NF-{date.today().strftime('%Y%m%d')}",
      "category": "Abonnement", "status": "pending", "reminder_sent": "false"},
     {"invoice_id": "inv-006", "supplier": "AXA Assurance", "amount": "120.00", "currency": "EUR",
-     "issue_date": "2025-07-01", "due_date": "2025-08-25", "invoice_number": "AXA-2025-789",
+     "issue_date": _rel(-20), "due_date": _rel(25), "invoice_number": "AXA-2025-789",
      "category": "Assurance", "status": "reminded", "reminder_sent": "true"},
 ]
 
